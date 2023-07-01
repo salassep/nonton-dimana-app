@@ -13,7 +13,7 @@ class ApiService {
   Future? getStreamingPlatforms() async {
     try {
       final response = await _getConnect.get('$_baseUrl/services', headers: _headers);
-      return response;
+      return response.body;
     } catch (e){
       return;
     }
@@ -22,7 +22,11 @@ class ApiService {
   Future? getMoviesByTitle(String title, String country) async {
     try {
       final response = await _getConnect.get('$_baseUrl/search/title?country=$country&title=$title', headers: _headers);
-      return response;
+
+      if (response.body == null || response.body['result'] == null) return [];
+      
+      return response.body['result'];
+
     } catch (e){
       return;
     }

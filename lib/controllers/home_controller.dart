@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nonton_dimana_app/services/api_service.dart';
+import 'package:nonton_dimana_app/services/movie_service.dart';
 
 class HomeController extends GetxController {
-  final TextEditingController movieController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  // final ApiService _apiService = ApiService();
+  final MovieService _movieService = MovieService();
 
-  RxString movieTitle = ''.obs;
+  RxList movies = [].obs;
+  RxString title = ''.obs;
 
-  void submitTitle() {
-    movieTitle.value = movieController.text;
+  void searchMovieByTitle() async {
+    // final result = await _apiService.getMoviesByTitle(title, 'id');
+    title.value = titleController.text;
+    final result = _movieService.getMoviesByTitle(title.value);
 
-    movieController.clear();
+    movies.value = result;
   }
 }

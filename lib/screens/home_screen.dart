@@ -9,7 +9,7 @@ class Home extends GetView<HomeController>{
 
   @override
   Widget build(BuildContext context) {
-return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Form Example'),
       ),
@@ -18,14 +18,34 @@ return Scaffold(
         child: Column(
           children: [
             TextField(
-              onChanged: (value) => homeController.movieTitle.value = value,
-              controller: homeController.movieController,
+              onChanged: (value) => homeController.searchMovieByTitle(),
+              controller: homeController.titleController,
               decoration: InputDecoration(
                 labelText: 'Name',
               ),
             ),
             SizedBox(height: 16.0),
-            Obx(() => Text(homeController.movieTitle.value)),
+            Flexible(
+              child: Container(
+                color: Colors.red,
+                child: Obx(() {
+
+                  if (homeController.title.value == '') return SizedBox.shrink();
+
+                  if (homeController.movies.isEmpty) return const Text("Film tidak ditemukan");
+              
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: homeController.movies.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(homeController.movies[index]['title']),
+                      );
+                    },
+                  );
+                }),
+              ),
+            ),
             ElevatedButton(
               onPressed: () => {},
               child: Text('Submit'),

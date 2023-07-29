@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nonton_dimana_app/constants/app_color.dart';
 import 'package:nonton_dimana_app/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -42,7 +43,7 @@ class Home extends GetView<HomeController>{
                       hintText: 'Apa judul filmnya ?',
                       prefixIcon: Icon(Icons.search),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFFB3005E))
+                        borderSide: BorderSide(color: AppColor.primaryColor)
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -58,14 +59,15 @@ class Home extends GetView<HomeController>{
                   },
                   itemBuilder: (BuildContext context, value) {
                     return Card(
+                      color: AppColor.primaryColor,
                       child: Row(
                         children: [
                           CachedNetworkImage(
                             imageUrl: value['poster'],
                             imageBuilder: (context, imageProvider) {
                               return Container(
-                                width: 140,
-                                height: 200,
+                                width: 100,
+                                height: 160,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: imageProvider,
@@ -76,8 +78,8 @@ class Home extends GetView<HomeController>{
                             },
                             placeholder: (context, url) {
                               return Container(
-                                width: 140,
-                                height: 200,
+                                width: 100,
+                                height: 160,
                                 color: Colors.grey,
                                 child: Image.asset(
                                   'assets/images/logo-no-word.png'
@@ -86,8 +88,8 @@ class Home extends GetView<HomeController>{
                             },
                             errorWidget: (context, url, error) {
                               return Container(
-                                width: 140,
-                                height: 200,
+                                width: 100,
+                                height: 160,
                                 color: Colors.grey,
                                 child: Image.asset(
                                   'assets/images/logo-no-word.png'
@@ -97,15 +99,37 @@ class Home extends GetView<HomeController>{
                           ),
                           const SizedBox(width: 15.0),
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Judul: ${value['title']}',
-                                  overflow: TextOverflow.fade,
-                                ),
-                                Text('Tahun: ${value['year']}'),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${value['title']}',
+                                    style: const TextStyle(
+                                      color: AppColor.secondaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.0
+                                    ),
+                                  ),
+                                  Text(
+                                    '${value['year']}',
+                                    style: const TextStyle(
+                                      color: AppColor.secondaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0
+                                    ),
+                                  ),
+                                  Text(
+                                    '${value['imdbRating']}*',
+                                    style: const TextStyle(
+                                      color: AppColor.secondaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

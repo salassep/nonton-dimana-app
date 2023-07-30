@@ -41,9 +41,17 @@ class Home extends GetView<HomeController>{
                     focusNode: homeController.focusNode,
                     decoration: const InputDecoration(
                       hintText: 'Apa judul filmnya ?',
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: Icon(
+                        Icons.search,
+                      ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColor.primaryColor)
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -120,13 +128,22 @@ class Home extends GetView<HomeController>{
                                       fontSize: 16.0
                                     ),
                                   ),
-                                  Text(
-                                    '${value['imdbRating']}*',
-                                    style: const TextStyle(
-                                      color: AppColor.secondaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16.0
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${value['imdbRating']}',
+                                        style: const TextStyle(
+                                          color: AppColor.secondaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.white,
+                                        size: 14.0,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -135,7 +152,22 @@ class Home extends GetView<HomeController>{
                         ],
                       )
                     );
-                  }, 
+                  },
+                  noItemsFoundBuilder: (BuildContext context) {
+                    return Container(
+                      color: AppColor.primaryColor,
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        'Film tidak ditemukan.',
+                        textAlign: TextAlign.center,
+                       style: TextStyle(
+                          color: AppColor.secondaryColor,
+                          fontSize: 16.0
+                        ),
+                      ),
+                    );
+                  },
                   onSuggestionSelected: (suggestion) {
                     print(suggestion);
                   }

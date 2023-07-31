@@ -12,6 +12,28 @@ class Home extends GetView<HomeController>{
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
     final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
+    Future<void> showDetailMovieDialog(BuildContext context, Map<String, Object?> movie) async {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            margin: EdgeInsets.all(10.0),
+            decoration: const BoxDecoration(
+              color: AppColor.secondaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(5.0))
+            ),
+            child: Text('jkj'),
+          );
+        }
+      );
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        homeController.showResult.value = true;
+      });
+      
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
@@ -36,6 +58,7 @@ class Home extends GetView<HomeController>{
                 TypeAheadField(
                   animationStart: 0,
                   animationDuration: Duration.zero,
+                  keepSuggestionsOnSuggestionSelected: true,
                   textFieldConfiguration: TextFieldConfiguration(
                     controller: homeController.titleController,
                     focusNode: homeController.focusNode,
@@ -66,91 +89,94 @@ class Home extends GetView<HomeController>{
                     return homeController.searchMovieByTitle(value);
                   },
                   itemBuilder: (BuildContext context, value) {
-                    return Card(
-                      color: AppColor.primaryColor,
-                      child: Row(
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: value['poster'],
-                            imageBuilder: (context, imageProvider) {
-                              return Container(
-                                width: 100,
-                                height: 160,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.fill,
-                                  )
-                                ),
-                              );
-                            },
-                            placeholder: (context, url) {
-                              return Container(
-                                width: 100,
-                                height: 160,
-                                color: Colors.grey,
-                                child: Image.asset(
-                                  'assets/images/logo-no-word.png'
-                                ),
-                              );
-                            },
-                            errorWidget: (context, url, error) {
-                              return Container(
-                                width: 100,
-                                height: 160,
-                                color: Colors.grey,
-                                child: Image.asset(
-                                  'assets/images/logo-no-word.png'
-                                ),
-                              );
-                            }
-                          ),
-                          const SizedBox(width: 15.0),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${value['title']}',
-                                    style: const TextStyle(
-                                      color: AppColor.secondaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0
-                                    ),
+                    return Visibility(
+                      visible: homeController.showResult.value,
+                      child: Card(
+                        color: AppColor.primaryColor,
+                        child: Row(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: value['poster'],
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  width: 100,
+                                  height: 160,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.fill,
+                                    )
                                   ),
-                                  Text(
-                                    '${value['year']}',
-                                    style: const TextStyle(
-                                      color: AppColor.secondaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16.0
-                                    ),
+                                );
+                              },
+                              placeholder: (context, url) {
+                                return Container(
+                                  width: 100,
+                                  height: 160,
+                                  color: Colors.grey,
+                                  child: Image.asset(
+                                    'assets/images/logo-no-word.png'
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '${value['imdbRating']}',
-                                        style: const TextStyle(
-                                          color: AppColor.secondaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0
+                                );
+                              },
+                              errorWidget: (context, url, error) {
+                                return Container(
+                                  width: 100,
+                                  height: 160,
+                                  color: Colors.grey,
+                                  child: Image.asset(
+                                    'assets/images/logo-no-word.png'
+                                  ),
+                                );
+                              }
+                            ),
+                            const SizedBox(width: 15.0),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${value['title']}',
+                                      style: const TextStyle(
+                                        color: AppColor.secondaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0
+                                      ),
+                                    ),
+                                    Text(
+                                      '${value['year']}',
+                                      style: const TextStyle(
+                                        color: AppColor.secondaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '${value['imdbRating']}',
+                                          style: const TextStyle(
+                                            color: AppColor.secondaryColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.0
+                                          ),
                                         ),
-                                      ),
-                                      const Icon(
-                                        Icons.star,
-                                        color: Colors.white,
-                                        size: 14.0,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        const Icon(
+                                          Icons.star,
+                                          color: Colors.white,
+                                          size: 14.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                        )
+                      ),
                     );
                   },
                   noItemsFoundBuilder: (BuildContext context) {
@@ -168,8 +194,10 @@ class Home extends GetView<HomeController>{
                       ),
                     );
                   },
-                  onSuggestionSelected: (suggestion) {
-                    print(suggestion);
+                  onSuggestionSelected: (value) {
+                    homeController.showResult.value = false;
+                    homeController.focusNode.unfocus();
+                    showDetailMovieDialog(context, value);
                   }
                 ),
               ],

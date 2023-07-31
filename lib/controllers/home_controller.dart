@@ -7,9 +7,9 @@ class HomeController extends GetxController {
   final FocusNode focusNode = FocusNode();
   // final ApiService _apiService = ApiService();
   final MovieService _movieService = MovieService();
+  final RxBool showResult = true.obs;
 
   // RxList movies = [].obs;
-  // RxString title = ''.obs;
 
   RxBool get isActive {
     if (focusNode.hasFocus || titleController.text.isNotEmpty) {
@@ -21,9 +21,9 @@ class HomeController extends GetxController {
   List searchMovieByTitle(String value) {
     // final result = await _apiService.getMoviesByTitle(title, 'id');
     // title.value = titleController.text;
-    final result = _movieService.getMoviesByTitle(value);
-
     // movies.value = result;
+    
+    final result = _movieService.getMoviesByTitle(value);
     return result;
   }
 }

@@ -6,7 +6,8 @@ dynamic cacheImage({
   required String imageUrl,
   required String placeHolderImageUrl,
   required double width,
-  required double height
+  required double height,
+  double borderRadius = 0,
 }) {
   return CachedNetworkImage(
     imageUrl: imageUrl,
@@ -18,7 +19,8 @@ dynamic cacheImage({
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.fill,
-          )
+          ),
+          borderRadius: BorderRadius.circular(borderRadius)
         ),
       );
     },

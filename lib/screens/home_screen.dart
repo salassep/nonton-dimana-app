@@ -3,7 +3,7 @@ import 'package:nonton_dimana_app/constants/app_color.dart';
 import 'package:nonton_dimana_app/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:nonton_dimana_app/widgets/cache_network_image.dart';
 
 class Home extends GetView<HomeController>{
   const Home({Key? key}) : super(key: key);
@@ -13,29 +13,91 @@ class Home extends GetView<HomeController>{
     final HomeController homeController = Get.put(HomeController());
     final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
-    Future<void> showDetailMovieDialog(BuildContext context, Map<String, Object?> movie) async {
+    Future<void> showDetailMovieDialog(BuildContext context, Map movie) async {
       await showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Container(
-            margin: const EdgeInsets.all(15.0),
-            decoration: const BoxDecoration(
-              color: AppColor.secondaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(5.0))
-            ),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    'X',
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      textBaseline: TextBaseline.ideographic
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+              margin: const EdgeInsets.all(15.0),
+              decoration: const BoxDecoration(
+                color: AppColor.secondaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(5.0))
+              ),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2.0, right: 2.0),
+                      child: GestureDetector(
+                        onTap: (){
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.clear,
+                          size: 40.0,
+                        ),
+                      )
+                    )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0, left: 20.0, bottom: 10.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        movie['title'],
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
                     ),
-                  )
-                )
-              ],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          cacheImage(
+                            imageUrl: movie['poster'], 
+                            placeHolderImageUrl: 'assets/images/logo-no-word.png', 
+                            width: MediaQuery.of(context).size.width / 1.2 , 
+                            height: (MediaQuery.of(context).size.width / 1.2) + 100,
+                            borderRadius: 10.0
+                          ),
+                          const SizedBox(height: 10.0),
+                          Row(
+                            children: [
+                              Text(
+                                '${movie['imdbRating']} ',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0
+                                ),
+                              ),
+                              const Icon(
+                                Icons.star,
+                                size: 20.0,
+                                color: Colors.orange,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            'Tahun: ${movie['year']}',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ],
+                      ), 
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }
@@ -108,40 +170,11 @@ class Home extends GetView<HomeController>{
                         color: AppColor.primaryColor,
                           child: Row(
                             children: [
-                              CachedNetworkImage(
-                                imageUrl: value['poster'],
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: 100,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      )
-                                    ),
-                                  );
-                                },
-                                placeholder: (context, url) {
-                                  return Container(
-                                    width: 100,
-                                    height: 160,
-                                    color: Colors.grey,
-                                    child: Image.asset(
-                                      'assets/images/logo-no-word.png'
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) {
-                                  return Container(
-                                    width: 100,
-                                    height: 160,
-                                    color: Colors.grey,
-                                    child: Image.asset(
-                                      'assets/images/logo-no-word.png'
-                                    ),
-                                  );
-                                }
+                              cacheImage(
+                                width: 100.0,
+                                height: 160.0,
+                                imageUrl: value['poster'], 
+                                placeHolderImageUrl: 'assets/images/logo-no-word.png'
                               ),
                               const SizedBox(width: 15.0),
                               Expanded(

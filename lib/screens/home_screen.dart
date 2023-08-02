@@ -62,7 +62,7 @@ class Home extends GetView<HomeController>{
                         shrinkWrap: true,
                         children: [
                           cacheImage(
-                            imageUrl: movie['poster'], 
+                            imageUrl: 'https://image.tmdb.org/t/p/w342${movie['posterPath']}', 
                             placeHolderImageUrl: 'assets/images/logo-no-word.png', 
                             width: MediaQuery.of(context).size.width / 1.2 , 
                             height: (MediaQuery.of(context).size.width / 1.2) + 100,
@@ -156,12 +156,14 @@ class Home extends GetView<HomeController>{
                       )
                     )
                   ),
+                  debounceDuration: const Duration(seconds: 2),
                   hideSuggestionsOnKeyboardHide: false,
-                  suggestionsCallback: (value) {
+                  suggestionsCallback: (value) async {
                     if (value.isEmpty) {
                       return [];
-                    }
-                    return homeController.searchMovieByTitle(value);
+                    } 
+                    final List movies = await homeController.searchMovieByTitle(value);
+                    return movies;
                   },
                   itemBuilder: (BuildContext context, value) {
                     return Obx(() => Visibility(
@@ -173,7 +175,7 @@ class Home extends GetView<HomeController>{
                               cacheImage(
                                 width: 100.0,
                                 height: 160.0,
-                                imageUrl: value['poster'], 
+                                imageUrl: 'https://image.tmdb.org/t/p/w342${value['posterPath']}', 
                                 placeHolderImageUrl: 'assets/images/logo-no-word.png'
                               ),
                               const SizedBox(width: 15.0),

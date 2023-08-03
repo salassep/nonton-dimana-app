@@ -48,7 +48,7 @@ class Home extends GetView<HomeController>{
                       alignment: Alignment.centerLeft,
                       child: Text(
                         movie['title'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold
                         ),
@@ -87,7 +87,7 @@ class Home extends GetView<HomeController>{
                           ),
                           Text(
                             'Tahun: ${movie['year']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold
                             ),
@@ -116,7 +116,7 @@ class Home extends GetView<HomeController>{
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Obx(() => Padding(
             padding: homeController.isActive.value || isKeyboardOpen
-              ? const EdgeInsets.only(left: 20.0, right: 20.0, top: 50.0) 
+              ? const EdgeInsets.only(left: 20.0, right: 20.0, top: 100.0) 
               : const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,7 +125,7 @@ class Home extends GetView<HomeController>{
                 : MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.only(left: 40.0, right: 40.0, bottom: 20.0),
                   child: Image.asset(
                     'assets/images/logo-cut.png'
                   ),
@@ -134,6 +134,7 @@ class Home extends GetView<HomeController>{
                   animationStart: 0,
                   animationDuration: Duration.zero,
                   keepSuggestionsOnSuggestionSelected: true,
+                  keepSuggestionsOnLoading: false,
                   textFieldConfiguration: TextFieldConfiguration(
                     controller: homeController.titleController,
                     focusNode: homeController.focusNode,
@@ -156,7 +157,7 @@ class Home extends GetView<HomeController>{
                       )
                     )
                   ),
-                  debounceDuration: const Duration(seconds: 2),
+                  debounceDuration: const Duration(seconds: 1),
                   hideSuggestionsOnKeyboardHide: false,
                   suggestionsCallback: (value) async {
                     if (value.isEmpty) {

@@ -47,7 +47,7 @@ class Home extends GetView<HomeController>{
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        movie['title'],
+                        '${movie['title']} (${movie['year']})',
                         style: const TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold
@@ -72,7 +72,7 @@ class Home extends GetView<HomeController>{
                           Row(
                             children: [
                               Text(
-                                '${movie['imdbRating']} ',
+                                '${movie['imdbRating']}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0
@@ -86,12 +86,12 @@ class Home extends GetView<HomeController>{
                             ],
                           ),
                           Text(
-                            'Tahun: ${movie['year']}',
+                            '${movie['overview']}',
                             style: const TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.bold
                             ),
                           ),
+                          const SizedBox(height: 20.0),
                         ],
                       ), 
                     ),

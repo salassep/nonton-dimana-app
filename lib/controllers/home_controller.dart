@@ -24,4 +24,32 @@ class HomeController extends GetxController {
     // final result = _movieService.getMoviesByTitle(value);
     // return result;
   }
+
+  String streamingPlatformToString(Map streamingPlatform) {
+    if (streamingPlatform['id'] == null) {
+      return 'Belum ada platform yang menayangkan film ini';
+    }
+
+    return streamingPlatform['id'].keys
+      .map((platform) => '${platform[0].toUpperCase()}${platform.substring(1)}')
+      .join(', ');
+  }
+
+  String genreToString(List genres) {
+    if (genres.isEmpty) {
+      return '-';
+    }
+
+    return genres.map((e) => e['name']).join(', ');
+  }
+
+  String durationToString(int value) {
+    int h, m, s;
+
+    s = value ~/ 3600;
+    h = ((value - s * 3600)) ~/ 60;
+    m = value - (s  * 3600) - (h * 60);
+
+    return '${h}j ${m}m';
+  }
 }

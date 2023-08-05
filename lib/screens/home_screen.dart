@@ -4,6 +4,7 @@ import 'package:nonton_dimana_app/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:nonton_dimana_app/widgets/cache_network_image.dart';
+import 'package:nonton_dimana_app/widgets/key_value_column.dart';
 
 class Home extends GetView<HomeController>{
   const Home({Key? key}) : super(key: key);
@@ -47,7 +48,7 @@ class Home extends GetView<HomeController>{
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '${movie['title']} (${movie['year']})',
+                        '${movie['originalTitle'] ?? movie['title']} ${movie['year'] != null ? '(${movie['year']})' : ''}',
                         style: const TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold
@@ -85,12 +86,23 @@ class Home extends GetView<HomeController>{
                               ),
                             ],
                           ),
-                          Text(
-                            '${movie['overview']}',
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
+                          movie['tagline'] != null && !movie['tagline'].isEmpty
+                            ? Text(
+                                movie['tagline'],
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                )
+                              )
+                            : const SizedBox.shrink(),
+                          keyValueColumn('Streaming Platform', homeController.streamingPlatformToString(movie['streamingInfo'])),
+                          keyValueColumn('Duration', movie['runtime'] != null ? homeController.durationToString(movie['runtime']) : '-'),
+                          keyValueColumn('Directors', movie['directors'] != null ? movie['directors'].join(", ") : '-'),
+                          keyValueColumn('Genre', movie['genres'] != null ? homeController.genreToString(movie['genres']) : '-'),
+                          keyValueColumn('Type', movie['type'] != null ? '${movie['type'][0].toUpperCase()}${movie['type'].substring(1)}' : '-'),
+                          keyValueColumn('Scenario', movie['overview'] ?? '-'),
+                          keyValueColumn('Cast', movie['cast'] != null ? movie['cast'].join(", ") : '-'),
                           const SizedBox(height: 20.0),
                         ],
                       ), 
@@ -139,7 +151,7 @@ class Home extends GetView<HomeController>{
                     controller: homeController.titleController,
                     focusNode: homeController.focusNode,
                     decoration: const InputDecoration(
-                      hintText: 'Apa judul filmnya ?',
+                      hintText: 'What is the title?',
                       prefixIcon: Icon(
                         Icons.search,
                       ),
@@ -187,7 +199,7 @@ class Home extends GetView<HomeController>{
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${value['title']}',
+                                        '${value['originalTitle'] ?? value['title']}',
                                         style: const TextStyle(
                                           color: AppColor.secondaryColor,
                                           fontWeight: FontWeight.bold,
@@ -195,7 +207,7 @@ class Home extends GetView<HomeController>{
                                         ),
                                       ),
                                       Text(
-                                        '${value['year']}',
+                                        '${value['year'] ?? '-'}',
                                         style: const TextStyle(
                                           color: AppColor.secondaryColor,
                                           fontWeight: FontWeight.bold,

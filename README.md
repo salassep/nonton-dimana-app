@@ -1,16 +1,18 @@
-# nonton_dimana_app
+# Nonton Dimana App
 
-A new Flutter project.
+Nonton Dimana App is an application that provides information about the streaming platforms where a movie is available. The app is built using Flutter.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Search movies: Users can search a movie.
+- Movie details: Users can view detailed information about a specific movie, including its streaming availability.
 
-A few resources to get you started if this is your first Flutter project:
+## Data
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The app fetches streaming availability data from the following API:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Streaming Availability API](https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability/)
+
+## Demo
+
+A demo for the app will be available soon.

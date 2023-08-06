@@ -1,5 +1,5 @@
 name: nonton_dimana_app
-description: A new Flutter project.
+description: An application to provide information about the platforms streaming a specific movie.
 publish_to: 'none' 
 version: 1.0.0+1
 

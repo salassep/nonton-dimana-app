@@ -1,6 +1,6 @@
 # Nonton Dimana App
 
-Nonton Dimana App is an application that provides information about the streaming platforms where a movie is available. The app is built using Flutter.
+Nonton Dimana App (Where to Watch App) is an application that helps to obtain information about which platform a movie is being streamed on. This application is built using Flutter
 
 ## Features
 

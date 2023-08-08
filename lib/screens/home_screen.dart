@@ -58,7 +58,7 @@ class Home extends GetView<HomeController>{
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0, left: 20.0, bottom: 10.0),
                       child: ListView(
                         shrinkWrap: true,
                         children: [

@@ -17,4 +17,5 @@ The app fetches streaming availability data from the following API:
 
 A demo for the app is available at the following link:
 
-- [Nonton Dimana App Demo](https://drive.google.com/file/d/18YH3BZNSrxUCwQbEIC2s6PZ9SIw9Yu5S/view?usp=drive_link)
+- [Nonton Dimana App Demo Preview](https://drive.google.com/file/d/18YH3BZNSrxUCwQbEIC2s6PZ9SIw9Yu5S/view?usp=drive_link)
+- [Nonton Dimana App (.apk)](https://drive.google.com/file/d/19fL9UwgxlL-IpAzhF9kP8LwlaBw8ZEgr/view?usp=drive_link)
